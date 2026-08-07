@@ -1,0 +1,25 @@
+# deps
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# build output
+dist/
+*.tsbuildinfo
+
+# runtime artifacts
+*.log
+*.pid
+shots/
+scripts/*.html
+scripts/dx-*.txt
+scripts/prof-out.txt
+
+# env
+.env
+.env.*
+
+# os/editor
+.DS_Store
+.idea/
+*.swp

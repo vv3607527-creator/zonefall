@@ -1,0 +1,38 @@
+{
+  "name": "zonefall",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "ZONEFALL — an original browser battle royale: 100-player arena on Isla Aurelia, authoritative Node server, Three.js client, full core systems. Plus UE5.6 port architecture docs.",
+  "scripts": {
+    "dev": "concurrently -k -n server,client -c yellow,cyan \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:server": "node server/src/index.ts",
+    "dev:client": "vite",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build": "npm run typecheck && vite build",
+    "build:client": "vite build",
+    "start": "node server/src/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "verify": "npm run typecheck && npm test && vite build",
+    "screenshot": "bash scripts/screenshot.sh"
+  },
+  "dependencies": {
+    "three": "^0.185.1",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.185.0",
+    "@types/ws": "^8.5.13",
+    "concurrently": "^9.1.2",
+    "typescript": "^5.9.2",
+    "vite": "^8.1.5",
+    "vitest": "^3.2.4"
+  },
+  "allowScripts": {
+    "esbuild": true
+  },
+  "engines": {
+    "node": ">=23.6"
+  }
+}
