@@ -13,7 +13,7 @@ const HOST = process.env.HOST ?? '127.0.0.1';
 const PORT = Number(process.env.PORT ?? 8787);
 const BOT_COUNT = Number(process.env.BOTS ?? 99);
 /** Directory of the built client (vite build output). */
-const CLIENT_DIR = fileURLToPath(new URL('../../../dist/', import.meta.url));
+const CLIENT_DIR = fileURLToPath(new URL('../../dist/', import.meta.url));
 
 const MIME: Record<string, string> = {
   '.html': 'text/html; charset=utf-8',
@@ -56,6 +56,13 @@ async function serveStatic(reqUrl: string): Promise<{ status: number; body: Buff
 /** Boot the authoritative sim and the static file server on the same port. */
 function main(): void {
   const http = createServer(async (req, res) => {
+    const pathname = new URL(req.url ?? '/', 'http://x').pathname;
+    if (pathname === '/health') {
+      const body = Buffer.from(JSON.stringify({ ok: true, tick: sim.tick }));
+      res.writeHead(200, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' });
+      res.end(body);
+      return;
+    }
     const { status, body, type } = await serveStatic(req.url ?? '/');
     res.writeHead(status, {
       'content-type': type,
